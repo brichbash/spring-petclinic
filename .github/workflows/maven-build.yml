@@ -6,17 +6,13 @@ name: Java CI with Maven
 on:
   push:
     branches: [ main ]
-  pull_request:
-    branches: [ main ]
 
 jobs:
-  build:
-
+  verify:
     runs-on: ubuntu-latest
     strategy:
       matrix:
         java: [ '17' ]
-
     steps:
       - uses: actions/checkout@v4
       - name: Set up JDK ${{matrix.java}}

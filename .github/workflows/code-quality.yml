@@ -1,0 +1,83 @@
+# This workflow will build a Java project with Maven, and cache/restore any dependencies to improve the workflow execution time
+# For more information see: https://help.github.com/actions/language-and-framework-guides/building-and-testing-java-with-maven
+
+name: Code Quality for Pull Requests
+
+on:
+  push:
+    branches:
+      - feature-QD001
+  pull_request:
+    branches:
+      - feature-QD001
+  workflow_dispatch:
+
+jobs:
+  verify:
+
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        java: [ '21' ]
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: 0
+
+      - name: Set up JDK ${{matrix.java}}
+        uses: actions/setup-java@v4
+        with:
+          java-version: ${{matrix.java}}
+          distribution: 'adopt'
+          cache: maven
+
+      - name: Build with Maven Wrapper
+        run: ./mvnw -B verify
+
+      - name: Archive coverage data
+        uses: actions/upload-artifact@v4
+        with:
+          name: maven-coverage-data-jacoco
+          path: .qodana/code-coverage
+
+  qodana:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+      checks: write
+    needs: verify
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: 0
+
+      - name: 'Download Coverage Data'
+        uses: actions/download-artifact@v4
+        with:
+          name: maven-coverage-data-jacoco
+          path: .qodana/code-coverage
+
+      - name: 'Qodana Scan'
+#        uses: JetBrains/qodana-action@v2023.3.1
+        uses: JetBrains/qodana-action@main
+        with:
+          args: --property=project.open.type=Maven, --apply-fixes
+          use-caches: true
+          cache-dir: ${{ runner.temp }}/qodana/caches
+          post-pr-comment: true
+          push-fixes: pull-request
+        env:
+          QODANA_TOKEN: ${{ secrets.QODANA_TOKEN }}
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: qodana
+    steps:
+      - name: 'Deploy'
+        run: echo "Deploy!"

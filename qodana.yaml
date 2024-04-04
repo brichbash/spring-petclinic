@@ -1,0 +1,67 @@
+#-------------------------------------------------------------------------------#
+#               Qodana analysis is configured by qodana.yaml file               #
+#             https://www.jetbrains.com/help/qodana/qodana-yaml.html            #
+#-------------------------------------------------------------------------------#
+version: "1.0"
+
+#Specify inspection profile for code analysis
+profile:
+  name: qodana.recommended
+
+#Enable inspections
+include:
+  - name: All
+  - name: CheckDependencyLicenses
+  - name: VulnerableLibrariesGlobal
+
+#Disable inspections
+#exclude:
+#  - name: <SomeDisabledInspectionId>
+#    paths:
+#      - <path/where/not/run/inspection>
+
+projectJDK: "21" #(Applied in CI/CD pipeline)
+
+#Execute shell command before Qodana execution (Applied in CI/CD pipeline)
+#bootstrap: sh ./prepare-qodana.sh
+
+#Install IDE plugins before Qodana execution (Applied in CI/CD pipeline)
+#plugins:
+#  - id: <plugin.id> #(plugin id can be found at https://plugins.jetbrains.com)
+
+#Specify Qodana linter for analysis (Applied in CI/CD pipeline)
+linter: jetbrains/qodana-jvm:2024.1-eap
+
+fixesStrategy: apply
+
+#failureConditions:
+#  severityThresholds:
+#    any: 300
+#    critical: 70
+#    high: 100
+#    moderate: 100
+#    low: <number>
+#    info: <number>
+#  testCoverageThresholds:
+#    fresh: <number> # Fresh code coverage
+#    total: 90 # Total code coverage
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
