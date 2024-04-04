@@ -28,7 +28,7 @@ import java.util.Collection;
  * Repository class for <code>Vet</code> domain objects All method names are compliant
  * with Spring Data naming conventions so this interface can easily be extended for Spring
  * Data. See:
- * https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#repositories.query-methods.query-creation
+ * <a href="https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#repositories.query-methods.query-creation">...</a>
  *
  * @author Ken Krebs
  * @author Juergen Hoeller
@@ -47,9 +47,6 @@ public interface VetRepository extends Repository<Vet, Integer> {
 
 	/**
 	 * Retrieve all <code>Vet</code>s from data store in Pages
-	 * @param pageable
-	 * @return
-	 * @throws DataAccessException
 	 */
 	@Transactional(readOnly = true)
 	@Cacheable("vets")

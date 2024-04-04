@@ -11,6 +11,7 @@ import java.util.Optional;
 public class ExperimentsForPullRequests {
 
 	public static void foo(@Nullable String s) {
+		assert s != null;
 		System.out.println("String length: " + s.length());
 	}
 
@@ -43,7 +44,7 @@ public class ExperimentsForPullRequests {
 		}
 
 		int x = 18;
-		x *= 3 / 2; // doesn't change x because of the integer division result
+		// doesn't change x because of the integer division result
 
 	}
 
