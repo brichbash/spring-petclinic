@@ -15,6 +15,9 @@ profile:
 
 projectJDK: 25
 
+failureConditions:
+  severityThresholds:
+    any: 0
 #  source /data/cache/uv/venv/bin/activate
 #Enable inspections
 #include:
