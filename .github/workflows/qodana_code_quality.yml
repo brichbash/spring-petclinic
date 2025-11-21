@@ -35,4 +35,4 @@ jobs:
           upload-result: true
           # quick-fixes available in Ultimate and Ultimate Plus plans
           push-fixes: 'none'
-          args: --property,-Dproject.open.type=Gradle
+          args: --property,project.open.type=Gradle
