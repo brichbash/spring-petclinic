@@ -54,6 +54,9 @@ public class Pet extends NamedEntity {
 	@JoinColumn(name = "type_id")
 	private @Nullable PetType type;
 
+	@Column(name = "photo_path")
+	private @Nullable String photoPath;
+
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinColumn(name = "pet_id")
 	@OrderBy("date ASC")
@@ -73,6 +76,14 @@ public class Pet extends NamedEntity {
 
 	public void setType(@Nullable PetType type) {
 		this.type = type;
+	}
+
+	public @Nullable String getPhotoPath() {
+		return this.photoPath;
+	}
+
+	public void setPhotoPath(@Nullable String photoPath) {
+		this.photoPath = photoPath;
 	}
 
 	public Collection<Visit> getVisits() {
